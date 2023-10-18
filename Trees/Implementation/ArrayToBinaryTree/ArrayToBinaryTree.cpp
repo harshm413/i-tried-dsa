@@ -15,12 +15,12 @@ class Tree{
         if(a>=b) return a;
         else return b;
     }
-    Node* insertLevelOrder(vector<int> &array, int i, int n){
+    Node* insertLevelOrder(vector<int> &array, int index){
         Node *root=nullptr;
-        if(i<n){
-            root=new Node(array[i]);
-            root->left=insertLevelOrder(array,2*i+1,n);
-            root->right=insertLevelOrder(array,2*i+2,n);
+        if(index < array.size()){
+            root=new Node(array[index]);
+            root->left=insertLevelOrder(array,2*index+1);
+            root->right=insertLevelOrder(array,2*index+2);
         }
         return root;
     }
@@ -64,7 +64,7 @@ class Tree{
         root=nullptr;
     }
     void insertLevelOrder(vector<int> &array){
-        root=insertLevelOrder(array, 0, array.size());
+        root=insertLevelOrder(array, 0);
     }
     void preOrder(){
         preOrder(root);

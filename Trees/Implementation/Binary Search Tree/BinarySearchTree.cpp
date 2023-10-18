@@ -40,6 +40,58 @@ class Tree{
         printNodeAtDistance(root->left,dist-1);
         printNodeAtDistance(root->right,dist-1);
     }
+    Node* deleteNode(Node* root, int value) {
+        if (root == nullptr) {
+            return nullptr;
+        }
+
+        if (value < root->value) {
+            root->left = deleteNode(root->left, value);
+        } else if (value > root->value) {
+            root->right = deleteNode(root->right, value);
+        } else {
+            // The node to be deleted is a leaf node.
+            if (root->left == nullptr && root->right == nullptr) {
+                delete root;
+                return nullptr;
+            }
+
+            // The node to be deleted has one child node.
+            if (root->left == nullptr) {
+                Node* temp = root->right;
+                delete root;
+                return temp;
+            } else if (root->right == nullptr) {
+                Node* temp = root->left;
+                delete root;
+                return temp;
+            }
+
+            // The node to be deleted has two child nodes.
+            // Find the inorder successor of the node to be deleted.
+            Node* successor = root->right;
+            while (successor->left != nullptr) {
+            successor = successor->left;
+            }
+
+            // Copy the value of the inorder successor to the node to be deleted.
+            root->value = successor->value;
+
+            // Delete the inorder successor.
+            root->right = deleteNode(root->right, successor->value);
+        }
+
+        return root;
+    }
+    bool equals(Node *first, Node *second){
+        if(first==nullptr && second==nullptr)
+            return true;
+        if(first!=nullptr && second!=nullptr)
+            return first->value == second->value
+                && equals(first->left,second->left)
+                && equals(first->right,second->right);
+        return false;
+    }
     public:
     Tree(){
         root=nullptr;
@@ -95,6 +147,12 @@ class Tree{
             printNodeAtDistance(i);
             cout<<endl;
         }
+    }
+    void deleteNode(int val){
+        root=deleteNode(root,val);
+    }
+    bool equals(Tree other){
+        return equals(root,other.root);
     }
 };
 int main(){
