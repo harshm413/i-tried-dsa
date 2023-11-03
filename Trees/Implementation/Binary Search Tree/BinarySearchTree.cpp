@@ -71,7 +71,7 @@ class Tree{
             // Find the inorder successor of the node to be deleted.
             Node* successor = root->right;
             while (successor->left != nullptr) {
-            successor = successor->left;
+                successor = successor->left;
             }
 
             // Copy the value of the inorder successor to the node to be deleted.
